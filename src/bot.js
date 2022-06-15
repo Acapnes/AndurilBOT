@@ -1,5 +1,7 @@
-const { Client, Intents } = require('discord.js');
+const { Client, Collection, Intents } = require('discord.js');
 require("dotenv").config();
+const fs = require('node:fs');
+const path = require('node:path');
 
 const client = new Client({
     intents: [
@@ -11,35 +13,17 @@ const client = new Client({
 
 });
 
-const eventFiles = fs.readdirSync("./Events").filter(file => file.endsWith('.js'));
+const eventsPath = path.join(__dirname, 'events');
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
-
-
-client.on('ready', () => {
-
-    for (const file of eventFiles) {
-        const filePath = path.join(eventsPath, file);
-        const event = require(filePath);
-        if (event.once) {
-            client.once(event.name, (...args) => event.execute(...args));
-        } else {
-            client.on(event.name, (...args) => event.execute(...args));
-        }
-    }
-
-
-    console.log(`Logged in as ${client.user.tag}!`);
-});
-
-client.on("messageCreate", (message) => {
-    if (message.content.startsWith("hi")) {
-        message.channel.send("Hello");
-    }
-});
-
-client.on("guildMemberAdd", (member,) => {
-    member.guild.channels.cache.get("986312482471682128").send(`👋 Hoşgeldin! ${member}`)
-    member.roles.add("986310579645984830");
-});
+for (const file of eventFiles) {
+	const filePath = path.join(eventsPath, file);
+	const event = require(filePath);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args));
+	}
+}
 
 client.login(process.env.TOKEN);
