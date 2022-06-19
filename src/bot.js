@@ -9,6 +9,7 @@ const client = new Client({
 	intents: [
 		Intents.FLAGS.GUILDS,
 		Intents.FLAGS.DIRECT_MESSAGES,
+		Intents.FLAGS.GUILD_MEMBERS,
 		Intents.FLAGS.GUILD_BANS,
 	],
 
@@ -22,6 +23,7 @@ const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'
 for (const file of eventFiles) {
 	const filePath = path.join(eventsPath, file);
 	const event = require(filePath);
+	console.log(event.name + " event added.");
 	if (event.once) {
 		client.once(event.name, (...args) => event.execute(...args));
 	} else {
@@ -82,7 +84,6 @@ client.on("interactionCreate", async interaction => {
 	}
 
 	handleCommand();
-	
 })
 
 
