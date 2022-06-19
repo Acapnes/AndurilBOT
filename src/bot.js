@@ -8,7 +8,8 @@ const path = require('node:path');
 const client = new Client({
 	intents: [
 		Intents.FLAGS.GUILDS,
-		Intents.FLAGS.DIRECT_MESSAGES
+		Intents.FLAGS.DIRECT_MESSAGES,
+		Intents.FLAGS.GUILD_BANS,
 	],
 
 });
@@ -45,7 +46,7 @@ for (const file of commandsFiles) {
 	commands.push(command.data.toJSON());
 }
 
-client.on("ready", () => {
+client.on("ready", (message) => {
 
 	const guild_ids = client.guilds.cache.map(guild => guild.id);
 
@@ -57,23 +58,31 @@ client.on("ready", () => {
 			.then(() => console.log("Commands updated for guild " + guildId))
 			.catch(err => console.log(err));
 	}
+
+	// console.log(message);
 })
 
-client.on("interaction", async interaction => {
-	if (!interaction.isCommand()) return;
+client.on("interactionCreate", async interaction => {
 
-	const command = client.commands.get(interaction.commandName);
+	async function handleCommand() {
+		if (!interaction.isCommand()) return;
 
-	if (!command) return;
+		const command = client.commands.get(interaction.commandName);
 
-	try {
+		if (!command) return;
 
-		await command.execute(interaction);
+		try {
 
-	} catch (err) {
-		console.log(err);
-		await interaction.reply({ content: "There is an error" });
+			await command.execute(interaction);
+
+		} catch (err) {
+			console.log(err);
+			await interaction.reply({ content: "There is an error" });
+		}
 	}
+
+	handleCommand();
+	
 })
 
 
