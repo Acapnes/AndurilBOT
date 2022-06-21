@@ -5,17 +5,15 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("kick")
         .setDescription("Kick a member!")
-        .addUserOption(option => option.setName("member").setDescription("Who will be kicked?").setRequired(true)),
+        .addUserOption(option => option.setName("member").setDescription("Who will be kicked?").setRequired(true))
+        .addStringOption(option => option.setName("reason").setDescription("Reason for kick").setRequired(false)),
     async execute(interaction) {
 
         if (!interaction.member.permissions.has("KICK_MEMBERS")) return interaction.reply({ content: "Not have enough permission for kick members.", ephemeral: true })
 
-        const member = interaction.options.getMember("member")
-        const user = interaction.options.getUser("member")
-
-        await member.kick()
+        await interaction.options.getMember("member").kick(interaction.options.getString("reason"))
             .then(async () => {
-                await interaction.reply(String(user) + " Has been kicked from server. 👾")
+                await interaction.reply(String(interaction.options.getUser("member")) + " Has been kicked from server. 👾 \nReason: " + interaction.options.getString("reason") + " 👾")
             }).catch(async (err) => {
                 console.log("KICK ERROR " + err);
                 await interaction.reply({ content: "Something went wrong, please try again. 😔" })
