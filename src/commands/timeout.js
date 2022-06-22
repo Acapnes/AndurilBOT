@@ -4,7 +4,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("timeout")
-        .setDescription("Kick a member!")
+        .setDescription("Timeout a member!")
         .addUserOption(option => option.setName("member").setDescription("Who will be kicked?").setRequired(true))
         .addNumberOption(option => option.setName('time').setDescription('Enter the time in minutes.').setRequired(true)),
     async execute(interaction) {
