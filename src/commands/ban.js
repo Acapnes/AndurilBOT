@@ -24,7 +24,7 @@ module.exports = {
                     interaction.options.getString("reason")
                 );
 
-                await interaction.reply(String(interaction.options.getUser("member")) + " Has been banned from server. 👽")
+                await interaction.reply(String(interaction.options.getUser("member")) + " Has been banned from server. 🧙‍♂️")
             })
             .catch(async (err) => {
                 console.log("BAN ERROR " + err)

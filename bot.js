@@ -1,16 +1,21 @@
-const { Client, Collection, Interaction, Intents } = require('discord.js');
+const { Client, Collection, Interaction, Intents, ClientPresence } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 require("dotenv").config();
 const fs = require('node:fs');
 const path = require('node:path');
+const { Logger } = require('./src/helpers/logger');
 
 const client = new Client({
 	intents: [
 		Intents.FLAGS.GUILDS,
-		Intents.FLAGS.DIRECT_MESSAGES,
 		Intents.FLAGS.GUILD_MEMBERS,
+		Intents.FLAGS.GUILD_MESSAGES,
 		Intents.FLAGS.GUILD_BANS,
+		Intents.FLAGS.GUILD_INVITES,
+		Intents.FLAGS.GUILD_INTEGRATIONS,
+		Intents.FLAGS.GUILD_WEBHOOKS,
+		Intents.FLAGS.DIRECT_MESSAGES,
 	],
 
 });
@@ -50,6 +55,8 @@ for (const file of commandsFiles) {
 
 client.on("ready", (message) => {
 
+	client.user.setActivity('LOTR', { type: 'WATCHING' });
+
 	const guild_ids = client.guilds.cache.map(guild => guild.id);
 
 	const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
@@ -62,7 +69,7 @@ client.on("ready", (message) => {
 	}
 
 	// console.log(message);
-})
+});
 
 client.on("interactionCreate", async interaction => {
 

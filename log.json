@@ -1,5 +1,18 @@
 {
-  "Banlist": [],
-  "Kicklist": [{ "id": "988791956580753418", "name": "Alper" }],
+  "Banlist": [
+    {
+      "memberId": "988791956580753418",
+      "memberName": "Alper",
+      "days": 2,
+      "reason": "3"
+    },
+    {
+      "memberId": "988791956580753418",
+      "memberName": "Alper",
+      "days": null,
+      "reason": null
+    }
+  ],
+  "Kicklist": [],
   "Invitelist": []
 }
