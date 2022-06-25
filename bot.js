@@ -16,6 +16,7 @@ const client = new Client({
 		Intents.FLAGS.GUILD_INTEGRATIONS,
 		Intents.FLAGS.GUILD_WEBHOOKS,
 		Intents.FLAGS.DIRECT_MESSAGES,
+		Intents.FLAGS.GUILD_VOICE_STATES,
 	],
 
 });
@@ -82,7 +83,7 @@ client.on("interactionCreate", async interaction => {
 
 		try {
 
-			await command.execute(interaction);
+			await command.execute(client, interaction);
 
 		} catch (err) {
 			console.log(err);

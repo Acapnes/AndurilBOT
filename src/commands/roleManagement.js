@@ -16,7 +16,7 @@ module.exports = {
                 .setDescription('Remove a role from user')
                 .addRoleOption(option => option.setName('role').setDescription('Select a role').setRequired(true))
                 .addUserOption(option => option.setName('user').setDescription('Select a user').setRequired(true))),
-    async execute(interaction) {
+    async execute(client,interaction) {
 
         if (interaction.options.getSubcommand() === 'addrole') {
 

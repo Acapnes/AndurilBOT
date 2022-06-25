@@ -5,7 +5,7 @@ module.exports = {
         .setName('setnickname')
         .setDescription('Changes your Nickname in this server!')
         .addStringOption(option => option.setName('nickname').setDescription('Enter a nickname').setRequired(true)),
-    async execute(interaction) {
+    async execute(client,interaction) {
 
         if (!interaction.member.permissions.has("CHANGE_NICKNAME")) return interaction.reply({ content: "Not have enough permission.", ephemeral: true });
 

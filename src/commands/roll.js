@@ -6,7 +6,7 @@ module.exports = {
         .setDescription("Roll dice.")
         .addIntegerOption(option => option.setName("start").setDescription("Starts with"))
         .addIntegerOption(option => option.setName("end").setDescription("Ends with")),
-    async execute(interaction) {
+    async execute(client, interaction) {
         await interaction.reply("🧙‍♂️ " + String(Math.floor(Math.random() * (interaction.options.getInteger("end") || 10)) + (interaction.options.getInteger("start") || 0)))
     }
 }

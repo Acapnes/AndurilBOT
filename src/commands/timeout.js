@@ -7,7 +7,7 @@ module.exports = {
         .setDescription("Timeout a member!")
         .addUserOption(option => option.setName("member").setDescription("Who will be kicked?").setRequired(true))
         .addNumberOption(option => option.setName('time').setDescription('Enter the time in minutes.').setRequired(true)),
-    async execute(interaction) {
+    async execute(client, interaction) {
 
         if (!interaction.member.permissions.has("TIMEOUT_MEMBERS")) return interaction.reply({ content: "Not have enough permission for kick members.", ephemeral: true });
 

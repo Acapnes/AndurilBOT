@@ -10,7 +10,7 @@ module.exports = {
         .addUserOption(option => option.setName("member").setDescription("Who will be banned?").setRequired(true))
         .addNumberOption(option => option.setName("days").setDescription("Ban time as days?").setRequired(false))
         .addStringOption(option => option.setName("reason").setDescription("Reason to ban").setRequired(false)),
-    async execute(interaction) {
+    async execute(client, interaction) {
 
         if (!interaction.member.permissions.has("BAN_MEMBERS")) return interaction.reply({ content: "You have not permission.", ephemeral: true })
 

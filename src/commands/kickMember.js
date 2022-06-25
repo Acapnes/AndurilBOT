@@ -8,7 +8,7 @@ module.exports = {
         .setDescription("Kick a member!")
         .addUserOption(option => option.setName("member").setDescription("Who will be kicked?").setRequired(true))
         .addStringOption(option => option.setName("reason").setDescription("Reason for kick").setRequired(false)),
-    async execute(interaction) {
+    async execute(client,interaction) {
 
         if (!interaction.member.permissions.has("KICK_MEMBERS")) return interaction.reply({ content: "Not have enough permission for kick members.", ephemeral: true })
 
