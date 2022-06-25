@@ -1,35 +1,42 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { joinVoiceChannel, createAudioResource, StreamType } = require('@discordjs/voice');
-const { createAudioPlayer } = require('@discordjs/voice');
-const ytdl = require('ytdl-core');
-const { generateDependencyReport } = require('@discordjs/voice');
-
-
+const { MessageEmbed } = require("discord.js");
+const { QueryType } = require("discord-player");
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('play')
-        .setDescription('Plays a music with Youtube URL.'),
-    // .addStringOption(option => option.setName("input").setDescription("Youtube URL").setRequired(true)),
+        .setDescription('Give me some hints about this music')
+        .addStringOption(option => option.setName("input").setDescription("Hint of music.").setRequired(true)),
     async execute(client, interaction) {
+        if (!interaction.member.voice.channel) {
+            return interaction.reply("You must be in a voice channel.")
+        }
 
-        console.log("Client " + client);
-        console.log("Interaction " + interaction)
-        // const connection = joinVoiceChannel({
-        //     channelId: "955751913503207509",
-        //     guildId: process.env.GUILD_ID,
-        //     adapterCreator: interaction.guild.voiceAdapterCreator,
-        // });
+        let embedModal = new MessageEmbed()
 
-        // var stream = await ytdl("https://youtu.be/gIYq6ydpYwA", {
-        //     highWaterMark: 1 << 25,
-        //     filter: "audioonly"
-        // });
+        const queue = await client.player.createQueue(interaction.guild)
+        if (!queue.connection) await queue.connect(interaction.member.voice.channel)
 
-        // const player = createAudioPlayer();
-        // const resource = createAudioResource(stream, { inputType: StreamType.Opus });
+        let url = interaction.options.getString("input")
+        const result = await client.player.search(url, {
+            requestedBy: interaction.user,
+            searchEngine: QueryType.AUTO
+        })
 
-        // connection.subscribe(player);
-        // player.play(resource);
+        if (result.tracks.length === 0) {
+            return interaction.reply("No results")
+        }
+
+        const song = result.tracks[0]
+        await queue.addTrack(song)
+
+        embedModal
+            .setDescription(`**[${song.title}](${song.url})**`)
+            .setThumbnail(song.thumbnail)
+            .setFooter({ text: `Duration: ${song.duration}` })
+
+        await interaction.reply({ content: "🧙‍♂️", embeds: [embedModal] })
+
+        if (!queue.playing) await queue.play()
     }
 }
