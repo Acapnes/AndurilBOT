@@ -4,7 +4,7 @@ const { Routes } = require('discord-api-types/v9');
 require("dotenv").config();
 const fs = require('node:fs');
 const path = require('node:path');
-const { Logger } = require('./src/helpers/logger');
+const { Player } = require("discord-player")
 
 const client = new Client({
 	intents: [
@@ -41,6 +41,12 @@ for (const file of eventFiles) {
 
 const commands = [];
 client.commands = new Collection();
+client.player = new Player(client, {
+	ytdlOptions: {
+		quality: "highestaudio",
+		highWaterMark: 1 << 25
+	}
+})
 
 const commandsPath = path.join(__dirname, './src/commands');
 const commandsFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
