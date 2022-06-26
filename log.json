@@ -13,6 +13,12 @@
       "reason": null
     }
   ],
-  "Kicklist": [],
+  "Kicklist": [
+    {
+      "memberId": "824359694960951296",
+      "memberName": "Mgner",
+      "reason": "deneme"
+    }
+  ],
   "Invitelist": []
 }
