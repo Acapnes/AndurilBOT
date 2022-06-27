@@ -8,8 +8,6 @@ module.exports = {
         .addUserOption(option => option.setName("user").setDescription("Select user.").setRequired(true)),
     async execute(client, interaction) {
 
-        console.log(interaction.user)
-
         let embedModal = new MessageEmbed()
             .setAuthor({ name: interaction.options.getUser("user").username + "#" + interaction.options.getUser("user").discriminator, iconURL: interaction.options.getUser("user").displayAvatarURL({ format: "png" }) })
             .setDescription(`[Avatar Link](${interaction.options.getUser("user").avatarURL()})`)
