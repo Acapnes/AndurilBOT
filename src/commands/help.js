@@ -14,9 +14,9 @@ module.exports = {
         });
 
         let embedModal = new MessageEmbed()
-            .setDescription("Andúril Help [Source codes here!](https://github.com/Acapnes/AndurilBOT)")
+            .setDescription(`Andúril Help [Source codes here!](https://github.com/Acapnes/AndurilBOT)`)
             .addFields(commands)
-            
+
         interaction.reply({ embeds: [embedModal] })
     }
 }

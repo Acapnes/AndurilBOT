@@ -31,11 +31,11 @@ module.exports = {
         await queue.addTrack(song)
 
         embedModal
-            .setDescription(`**[${song.title}](${song.url})**`)
+            .setDescription(`**[${song.title}](${song.url})** 🧙‍♂️`)
             .setThumbnail(song.thumbnail)
             .setFooter({ text: `Duration: ${song.duration}` })
 
-        await interaction.reply({ content: "🧙‍♂️", embeds: [embedModal] })
+        await interaction.reply({ embeds: [embedModal] })
 
         if (!queue.playing) await queue.play()
     }
