@@ -11,7 +11,7 @@ module.exports = {
         if (!queue) return await interaction.reply("There are no songs in the queue")
 
         queue.skip()
-        await interaction.reply({ content: "Skipped! 🧙‍♂️", ephemeral: true });
+        await interaction.reply({ content: "Skipped! 🧙‍♂️" });
 
     }
 }
