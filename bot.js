@@ -75,7 +75,16 @@ client.on("ready", (message) => {
 			.catch(err => console.log(err));
 	}
 
-	// console.log(message);
+
+	const express = require("express")
+
+	const app = express();
+
+	app.get("/", (req, res) => {
+		res.status(200).send("Anduril")
+	})
+
+	app.listen(3000 || 3001)
 });
 
 client.on("interactionCreate", async interaction => {
