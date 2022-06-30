@@ -84,7 +84,15 @@ client.on("ready", (message) => {
 	app.set('views', path.join(__dirname, './src/views'))
 
 	app.get("/", (req, res) => {
-		res.status(200).render("index")
+		const avatar = client.user.avatarURL()
+		const commands = client.commands.map(command => {
+			return {
+				name: command.data.name,
+				value: command.data.description,
+			}
+		});
+
+		res.status(200).render("index", { commands,avatar })
 	})
 
 	app.listen(3000 || 3001)
