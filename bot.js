@@ -82,7 +82,7 @@ client.on("ready", (message) => {
 
 	let cors = require('cors')
 	app.use(cors({
-		origin: 'http://localhost:3000',
+		origin: 'https://anduril-bot.herokuapp.com',
 		credentials: true
 	}))
 
