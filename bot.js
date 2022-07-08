@@ -80,6 +80,12 @@ client.on("ready", (message) => {
 
 	const app = express();
 
+	let cors = require('cors')
+	app.use(cors({
+		origin: 'http://localhost:3000',
+		credentials: true
+	}))
+
 	app.set("view engine", "ejs")
 	app.set('views', path.join(__dirname, './src/views'))
 
@@ -92,10 +98,10 @@ client.on("ready", (message) => {
 			}
 		});
 
-		res.status(200).render("index", { commands,avatar })
+		res.status(200).render("index", { commands, avatar })
 	})
 
-	app.listen(3000 || 3001)
+	app.listen(8000)
 });
 
 client.on("interactionCreate", async interaction => {
