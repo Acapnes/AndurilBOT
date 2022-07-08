@@ -83,7 +83,7 @@ client.on("ready", (message) => {
 	app.set("view engine", "ejs")
 	app.set('views', path.join(__dirname, './src/views'))
 
-	app.get("https://anduril-bot.herokuapp.com/", (req, res) => {
+	app.get("https://anduril-bot.herokuapp.com", (req, res) => {
 		const avatar = client.user.avatarURL()
 		const commands = client.commands.map(command => {
 			return {
