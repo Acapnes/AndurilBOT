@@ -9,23 +9,24 @@ module.exports = {
         .addIntegerOption(option => option.setName('number').setDescription('How much messages will be deleted?')),
     async execute(client, interaction) {
 
-        if (!interaction.member.permissions.has("MESSAGES")) return interaction.reply({ content: "Not have enough permission.", ephemeral: true });
+        if (!interaction.member.permissions.has("MESSAGES" && "MANAGE_CHANNELS")) return interaction.reply({ content: "Not have enough permission.", ephemeral: true });
 
         await interaction.options.getChannel('channel') ? interaction.options.getChannel('channel').bulkDelete(interaction.options.getInteger('number') ? interaction.options.getInteger('number') : 10, true)
-            .then(() => {
-                interaction.reply({ content: "Messages Deleted!", ephemeral: true })
+            .then(async () => {
+                await interaction.reply({ content: "Messages Deleted!", ephemeral: true })
             })
-            .catch(err => {
+            .catch(async (err) => {
                 console.log("Clear Error: " + err)
                 interaction.reply({ content: "Something went wrong 😕", ephemeral: true })
 
-            }) : interaction.channel.bulkDelete(interaction.options.getInteger('number') ? interaction.options.getInteger('number') : 10, { filterOld: true })
-                .then(() => {
-                    interaction.reply({ content: "Messages Deleted! 🧙‍♂️", ephemeral: true })
+            }) : interaction.channel.bulkDelete(interaction.options.getInteger('number') ? interaction.options.getInteger('number') : 10, true)
+                .then(async () => {
+                    await interaction.reply({ content: "Messages Deleted! 🧙‍♂️", ephemeral: true })
                 })
-                .catch(err => {
+                .catch(async (err) => {
                     console.log("Clear Error: " + err)
                     interaction.reply({ content: "Something went wrong 😕", ephemeral: true })
                 })
+
     }
 }

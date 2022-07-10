@@ -18,7 +18,7 @@ const client = new Client({
 		Intents.FLAGS.DIRECT_MESSAGES,
 		Intents.FLAGS.GUILD_VOICE_STATES,
 	],
-
+	
 });
 
 /// Event Files Imported
@@ -60,31 +60,23 @@ for (const file of commandsFiles) {
 	commands.push(command.data.toJSON());
 }
 
-client.on("ready", (message) => {
+client.on("ready", async (message) => {
 
-	client.user.setActivity('LOTR', { type: 'WATCHING' });
-
-	const guild_ids = client.guilds.cache.map(guild => guild.id);
+	const guild_info = client.guilds.cache.map(guild => guild);
 
 	const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
-	for (const guildId of guild_ids) {
+	for (const guild of guild_info) {
 
-		rest.put(Routes.applicationGuildCommands(process.env.APP_ID, guildId),
+		rest.put(Routes.applicationGuildCommands(process.env.APP_ID, guild.id),
 			{ body: commands })
-			.then(() => console.log("Commands updated for guild " + guildId))
-			.catch(err => console.log(err));
+			.then(() => console.info(`Commands updated for guild ${guild.name} ${guild.id}`))
+			.catch(err => console.log("Guild Commands Upload Err: " + err));
 	}
 
 
 	const express = require("express")
 
 	const app = express();
-
-	let cors = require('cors')
-	app.use(cors({
-		origin: 'https://anduril-bot.herokuapp.com',
-		credentials: true
-	}))
 
 	app.set("view engine", "ejs")
 	app.set('views', path.join(__dirname, './src/views'))

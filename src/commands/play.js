@@ -8,6 +8,8 @@ module.exports = {
         .setDescription('Give me some hints about this music')
         .addStringOption(option => option.setName("input").setDescription("Hint of music.").setRequired(true)),
     async execute(client, interaction) {
+        if (!interaction.member.permissions.has(["SPEAK", "CONNECT"])) return interaction.reply({ content: "Not have enough permission.", ephemeral: true });
+
         if (!interaction.member.voice.channel) {
             return interaction.reply("You must be in a voice channel.")
         }
