@@ -18,7 +18,7 @@ const client = new Client({
 		Intents.FLAGS.DIRECT_MESSAGES,
 		Intents.FLAGS.GUILD_VOICE_STATES,
 	],
-	
+
 });
 
 /// Event Files Imported
@@ -61,6 +61,8 @@ for (const file of commandsFiles) {
 }
 
 client.on("ready", async (message) => {
+
+	client.user.setActivity('LOTR', { type: 'WATCHING' });
 
 	const guild_info = client.guilds.cache.map(guild => guild);
 
