@@ -1,6 +1,4 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { BanLogger } = require('../helpers/logger');
-const { execute } = require('./setNickName');
 
 module.exports = {
 
@@ -16,13 +14,6 @@ module.exports = {
 
         await interaction.options.getMember("member").ban({ days: interaction.options.getNumber("days") || "1", reason: interaction.options.getString("reason") })
             .then(async () => {
-
-                BanLogger(
-                    interaction.options.getMember("member").user.id,
-                    interaction.options.getMember("member").user.username,
-                    interaction.options.getNumber("days"),
-                    interaction.options.getString("reason")
-                );
 
                 await interaction.reply(String(interaction.options.getUser("member")) + " Has been banned from server. 🧙‍♂️")
             })
