@@ -71,7 +71,7 @@ client.on("ready", async (message) => {
 
 		rest.put(Routes.applicationGuildCommands(process.env.APP_ID, guild.id),
 			{ body: commands })
-			.then(() => console.info(`Commands updated for guild ${guild.name} ${guild.id}`))
+			.then(() => console.info(`Commands uploaded for guild ${guild.name} ${guild.id}`))
 			.catch(err => console.log("Guild Commands Upload Err: " + err));
 	}
 
