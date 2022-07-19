@@ -11,6 +11,5 @@ module.exports = {
             .setColor('RANDOM')
             .setFooter({ text: `Anduril BOT  🧙‍♂️` })
         client.guild.channels.cache.filter(channel => channel.type === 'GUILD_TEXT').find(channel => channel.position === 0 && channel.permissionsFor(client.guild.me).has('SEND_MESSAGES')).send({ embeds: [Embed] })
-        // client.guild.channels.cache.get(process.env.WELCOME_CHANNEL_ID).send(`👋 Welcome! ${client.user}`);
     },
 };
